@@ -1,0 +1,11 @@
+const r = require('express').Router();
+const c = require('../controllers/userController');
+const { protect } = require('../middleware/authMiddleware');
+const admin = require('../middleware/adminMiddleware');
+r.get('/profile', protect, c.getProfile);
+r.put('/profile', protect, c.updateProfile);
+r.get('/stats', protect, admin, c.stats);
+r.get('/', protect, admin, c.listUsers);
+r.get('/:id', protect, admin, c.getUser);
+r.put('/:id/block', protect, admin, c.toggleBlock);
+module.exports = r;

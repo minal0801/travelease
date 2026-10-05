@@ -1,0 +1,11 @@
+const r = require('express').Router();
+const c = require('../controllers/reviewController');
+const u = require('../controllers/userController');
+const { protect } = require('../middleware/authMiddleware');
+const admin = require('../middleware/adminMiddleware');
+r.get('/latest/all', c.latest);
+r.get('/admin/all', protect, admin, u.listReviews);
+r.delete('/admin/:id', protect, admin, u.deleteReview);
+r.post('/', protect, c.create);
+r.get('/:itemId', c.forItem);
+module.exports = r;
